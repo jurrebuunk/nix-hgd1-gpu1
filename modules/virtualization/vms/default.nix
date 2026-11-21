@@ -7,7 +7,7 @@ let
   mkDomain = vm: {
     definition = import ./lib/domain.nix { inherit inputs pkgs vm; };
     active = null;
-    restart = null;
+    restart = vm.restart or null;
   };
 
   mkDiskService = vm: {

@@ -3,7 +3,7 @@
 let
   networkModel = vm.network.model or "virtio";
 
-  networkInterface = if vm.network ? bridge then {
+  networkInterface = (if vm.network ? bridge then {
     type = "bridge";
     source.bridge = vm.network.bridge;
     model.type = networkModel;
@@ -11,7 +11,9 @@ let
     type = "network";
     source.network = vm.network.network;
     model.type = networkModel;
-  };
+  }) // (if vm.network ? macAddress then {
+    mac.address = vm.network.macAddress;
+  } else { });
 in
 {
   emulator = "${pkgs.qemu_kvm}/bin/qemu-system-x86_64";

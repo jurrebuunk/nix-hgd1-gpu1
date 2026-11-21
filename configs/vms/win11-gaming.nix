@@ -6,6 +6,9 @@ in
   name = "win11-gaming";
   uuid = "c59b4c32-6f1a-4f51-91e8-8d9d27cb4db1";
   type = "windows";
+  # Preserve a running Windows session when redefining its persistent XML.
+  # Apply supported live device changes explicitly; reboot manually for others.
+  restart = false;
 
   storage = {
     diskPath = "/var/lib/libvirt/images/win11-gaming.qcow2";
@@ -27,7 +30,8 @@ in
   memoryGiB = 32;
 
   network = {
-    inherit (lan) bridge;
+    bridge = lan.usersBridge;
+    macAddress = lan.gamingVmMac;
     # Windows has an inbox Intel e1000e driver, so networking works during install/OOBE.
     model = "e1000e";
   };

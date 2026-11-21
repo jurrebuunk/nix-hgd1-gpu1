@@ -13,6 +13,9 @@
   users.users.jurre = {
     isNormalUser = true;
     description = "jurre";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDfML1tz4bMJ7uAoIS5Hhd3cTE95X5QdaEJ8hR/1gWnE jurre@b302.nl"
+    ];
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -31,7 +34,15 @@
     wget
   ];
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    # Management bridge only; the USERS bridge must not expose the host.
+    openFirewall = false;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
 
   # Keep this at the release this machine was first installed with.
   system.stateVersion = "25.11";
