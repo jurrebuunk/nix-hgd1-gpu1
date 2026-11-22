@@ -16,7 +16,6 @@
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
-      hardwareConfig = /etc/nixos/hardware-configuration.nix;
 
       mkHost = lib.nixosSystem {
         inherit system;
@@ -24,14 +23,7 @@
         modules = [
           inputs.NixVirt.nixosModules.default
 
-          # Machine-specific and intentionally gitignored.
-          # Use `--impure` when rebuilding so flakes can read it from /etc/nixos.
-          (
-            { lib, ... }:
-            {
-              imports = lib.optional (builtins.pathExists hardwareConfig) hardwareConfig;
-            }
-          )
+          ./hardware-configuration.nix
           ./configuration.nix
           ./modules/hardware-sensors.nix
           ./modules/tailscale.nix
