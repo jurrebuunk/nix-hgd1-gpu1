@@ -1,6 +1,6 @@
 {
   # RTX 4060 dedicated to VFIO/libvirt guests.
-  # Keep these in sync with `lspci -nn` on compute01.
+  # Keep these in sync with `lspci -nn` on hgd1-gpu1.
   vfioIds = [
     "10de:2882" # AD107 [GeForce RTX 4060]
     "10de:22be" # AD107 High Definition Audio Controller

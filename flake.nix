@@ -1,5 +1,5 @@
 {
-  description = "Bare-bones NixOS flake for compute01";
+  description = "NixOS flake for hgd1-gpu1";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -32,7 +32,7 @@
       };
     in
     {
-      nixosConfigurations.compute01 = mkHost;
+      nixosConfigurations.hgd1-gpu1 = mkHost;
 
       # Alias for the first rebuild while the current hostname is still `nixos`.
       nixosConfigurations.nixos = mkHost;

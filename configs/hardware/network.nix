@@ -6,7 +6,7 @@
   hostMac = "f2:6e:3d:0b:cf:fe";
   hostAddress = "10.10.20.50/24";
   gateway = "10.10.20.1";
-  domain = "hgd1.lan.buunk.org";
+  domain = "lan.buunk.org";
 
   usersBridge = "br-users";
   usersVlan = 100;

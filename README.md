@@ -1,16 +1,16 @@
-# nix-compute01
+# nix-hgd1-gpu1
 
-NixOS flake for `compute01`, my AI/gaming server in the `hgd1` rack. It lives
-on the same site network as my cluster
-([nix-cluster](https://github.com/jurrebuunk/nix-cluster)) but is not part of
-it: it has its own repo, follows nixos-unstable, and runs a Windows gaming VM
-with the RTX 4060 passed through.
+NixOS flake for `hgd1-gpu1`, my GPU server for gaming and AI in the `hgd1`
+rack. It lives on the same site network as my cluster
+([nix-hgd1-cluster](https://github.com/jurrebuunk/nix-hgd1-cluster)) but is not
+part of it: it has its own repo, follows nixos-unstable, and runs a Windows
+gaming VM with the RTX 4060 passed through.
 
 ## Layout
 
 | Path | What |
 | --- | --- |
-| `flake.nix` | The `compute01` system (`nixos` is an alias for a first rebuild) |
+| `flake.nix` | The `hgd1-gpu1` system (`nixos` is an alias for a first rebuild) |
 | `configuration.nix` | Host basics: users, SSH, packages |
 | `hardware-configuration.nix` | Disks and detected hardware for this machine |
 | `configs/hardware/network.nix` | Network facts: addresses, VLAN, VM MAC |
@@ -21,10 +21,10 @@ with the RTX 4060 passed through.
 
 ## Deploy
 
-I deploy from my laptop, building on compute01 itself:
+I deploy from my laptop, building on the server itself:
 
 ```sh
-nixos-rebuild switch --flake .#compute01 \
+nixos-rebuild switch --flake .#hgd1-gpu1 \
   --target-host jurre@10.10.20.50 --build-host jurre@10.10.20.50 \
   --ask-sudo-password
 ```
@@ -32,11 +32,11 @@ nixos-rebuild switch --flake .#compute01 \
 From the home network, until Cloudflare/WARP access is set up, go through
 OPNsense with `NIX_SSHOPTS="-J root@192.168.2.12"` in front.
 
-`/etc/nixos` on compute01 is a checkout of this repo, so I can also rebuild
+`/etc/nixos` on the server is a checkout of this repo, so I can also rebuild
 locally after a `git pull`:
 
 ```sh
-sudo nixos-rebuild switch --flake /etc/nixos#compute01
+sudo nixos-rebuild switch --flake /etc/nixos#hgd1-gpu1
 ```
 
 ## Network
@@ -52,7 +52,8 @@ The host has no address on `br-users`, so it isn't reachable from USERS. SSH
 is only allowed on `br0` and Tailscale. Forwarding guards stop the host from
 routing around OPNsense between the VLANs, even though libvirt enables IP
 forwarding. The VM's MAC `52:54:00:39:2c:95` is fixed in Nix and reserved in
-OPNsense. Domain `hgd1.lan.buunk.org`, NTP from `10.10.20.1`.
+OPNsense. DNS names are `hgd1-gpu1.lan.buunk.org` for the host and
+`win11-gaming.lan.buunk.org` for the VM; NTP comes from `10.10.20.1`.
 
 ### SSH
 
