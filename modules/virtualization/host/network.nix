@@ -14,7 +14,7 @@ in
   networking.firewall.interfaces.${network.bridge}.allowedTCPPorts = [ 22 ];
   # Libvirt enables IP forwarding for its NAT network. Do not let this host
   # become an alternate router between USERS and INFRA (bypassing OPNsense).
-  # Same-bridge guest traffic remains permitted; Tailscale/virbr0 are unaffected.
+  # Same-bridge guest traffic remains permitted; virbr0 is unaffected.
   networking.firewall.extraCommands = ''
     for family in iptables ip6tables; do
       $family -C FORWARD -i ${network.usersBridge} ! -o ${network.usersBridge} -j DROP 2>/dev/null || \

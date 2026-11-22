@@ -49,7 +49,7 @@ Switch port 19 carries native INFRA VLAN 20 and tagged USERS VLAN 100:
 | Windows gaming VM | `br-users` over `enp6s0.100` | `10.10.100.50` (OPNsense reservation) | `10.10.100.1` |
 
 The host has no address on `br-users`, so it isn't reachable from USERS. SSH
-is only allowed on `br0` and Tailscale. Forwarding guards stop the host from
+is only allowed on `br0`. Forwarding guards stop the host from
 routing around OPNsense between the VLANs, even though libvirt enables IP
 forwarding. The VM's MAC `52:54:00:39:2c:95` is fixed in Nix and reserved in
 OPNsense. DNS names are `hgd1-gpu1.lan.buunk.org` for the host and

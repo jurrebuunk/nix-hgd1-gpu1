@@ -26,7 +26,6 @@
           ./hardware-configuration.nix
           ./configuration.nix
           ./modules/hardware-sensors.nix
-          ./modules/tailscale.nix
           ./modules/virtualization
         ];
       };
